@@ -5,19 +5,23 @@ import com.joseyustiz.walmart.util.Util;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ProductSearchServiceImpl implements ProductSearchService {
-    private final ProductSearchGateway gateway;
+    private final ProductSearchDataAccess gateway;
 
     @Override
     public List<Product> getProductsByPhrase(@NonNull String phrase) {
         List<Product> products= null;
-        if (Util.isNumeric(phrase))
-            products = gateway.findById(Long.parseLong(phrase));
-
-        if(products == null || products.size() == 0)
+        if (Util.isNumeric(phrase)) {
+            Optional<Product> product = gateway.findById(Long.parseLong(phrase));
+            if(product.isPresent())
+                 products = Collections.singletonList(product.get());
+        }
+        if(products == null)
             products = gateway.findByBrandOrDescription(phrase);
 
         if(products.size() > 0) {

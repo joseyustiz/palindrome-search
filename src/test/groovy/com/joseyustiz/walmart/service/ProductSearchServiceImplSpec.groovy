@@ -9,13 +9,13 @@ import spock.lang.Unroll
 class ProductSearchServiceImplSpec extends Specification {
     private static final String PALINDROME = "aba"
     @Shared
-    private ProductSearchGateway gateway
+    private ProductSearchDataAccess gateway
     @Shared
     @Subject
     private ProductSearchService service
 
     void setup() {
-        gateway = Stub(ProductSearchGateway)
+        gateway = Stub(ProductSearchDataAccess)
         service = new ProductSearchServiceImpl(gateway)
     }
 

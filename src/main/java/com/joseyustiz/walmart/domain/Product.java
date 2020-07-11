@@ -12,7 +12,7 @@ import java.net.URL;
 @AllArgsConstructor
 public class Product {
     @Min(value = 0)
-    private final Integer id;
+    private final Long id;
 
     @NotBlank
     private final String description;
@@ -33,7 +33,7 @@ public class Product {
     @Digits(integer = 3, fraction = 2)
     private Double percentageOfDiscount;
 
-    public Product(Integer id, String description, String brand, URL imageUrl, Double price) {
+    public Product(Long id, String description, String brand, URL imageUrl, Double price) {
         this(id,description,brand,imageUrl,price,0.0);
     }
 
