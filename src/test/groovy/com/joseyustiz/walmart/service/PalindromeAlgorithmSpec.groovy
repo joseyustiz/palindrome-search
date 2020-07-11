@@ -31,4 +31,17 @@ class PalindromeAlgorithmSpec extends Specification{
         where:
         phrase << ["Anna", "Civic", "Kayak", "Level"]
     }
+    def "single character word is not palindrome"(){
+        given:
+        def phrase = "1"
+        expect:
+        !PalindromeAlgorithm.isPalindrome(phrase)
+    }
+
+    def "null or blank word is not palindrome"(){
+        expect:
+        !PalindromeAlgorithm.isPalindrome(phrase)
+        where:
+        phrase << ["", " ", null]
+    }
 }

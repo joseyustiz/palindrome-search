@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface ProductSearchGateway {
 
-    List<Product> findByIdOrBrandOrDescription(String phrase);
+    List<Product> findByBrandOrDescription(String phrase);
+
+    List<Product> findById(Long id);
 }
