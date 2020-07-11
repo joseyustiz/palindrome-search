@@ -6,6 +6,7 @@ import spock.lang.Specification
 import spock.lang.Subject
 
 class ProductSearchServiceImplSpec extends Specification {
+    private static final String PALINDROME = "aba"
     @Shared
     private ProductSearchGateway gateway
     @Shared
@@ -17,13 +18,14 @@ class ProductSearchServiceImplSpec extends Specification {
         service = new ProductSearchServiceImpl(gateway)
     }
     def"when an exception in the repository is thrown it is not caught"(){
+        def exceptionMessage = "Exception"
         given:
-        gateway.findByIdOrBrandOrDescription(_) >> {throw new Exception("Exception")}
+        gateway.findByIdOrBrandOrDescription(_ as String) >> {throw new Exception(exceptionMessage)}
         when:
-        service.getProductsByPhrase("aba")
+        service.getProductsByPhrase(PALINDROME)
         then:
         def e = thrown(Exception)
-        e.getCause().message == "Exception"
+        e.getCause().message == exceptionMessage
     }
 
 }
