@@ -1,13 +1,13 @@
 package com.joseyustiz.walmart.repository
 
+import com.joseyustiz.walmart.configuration.RepositoryConfig
 import com.joseyustiz.walmart.repository.entity.Product
 import com.joseyustiz.walmart.repository.entity.ProductMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.data.mongodb.core.MongoTemplate
 import spock.lang.Specification
 
-@DataMongoTest
+@DataMongoTest(excludeAutoConfiguration = RepositoryConfig.class)
 class ProductDataAccessImplIntTest extends Specification{
     @Autowired ProductRepository repo
 
