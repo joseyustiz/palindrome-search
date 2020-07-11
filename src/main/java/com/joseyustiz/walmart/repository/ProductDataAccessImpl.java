@@ -24,7 +24,7 @@ public class ProductDataAccessImpl implements ProductSearchDataAccess {
 
     @Override
     public Optional<Product> findById(Long id) {
-        Optional<com.joseyustiz.walmart.repository.entity.Product> products = repo.findById(id.toString());
+        Optional<com.joseyustiz.walmart.repository.entity.Product> products = repo.findById(id);
         if(products.isPresent())
             return mapper.map(products.get());
 
