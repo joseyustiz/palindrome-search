@@ -5,6 +5,7 @@ import com.joseyustiz.walmart.util.Util;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     public List<Product> getProductsByPhrase(@NonNull String phrase) {
         List<Product> products= null;
         if (Util.isNumeric(phrase)) {
-            Optional<Product> product = gateway.findById(Long.parseLong(phrase));
+            Optional<Product> product = gateway.findById(Integer.parseInt(phrase));
             if(product.isPresent())
                  products = Collections.singletonList(product.get());
         }

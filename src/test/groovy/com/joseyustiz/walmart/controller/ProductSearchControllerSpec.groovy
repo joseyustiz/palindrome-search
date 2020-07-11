@@ -78,10 +78,10 @@ class ProductSearchControllerSpec extends Specification {
         where:
         phrase | products
         "aba"  | [[Product.builder().id(1).brand("brand aba").description("description")
-                           .imageUrl(new URL("http://walmart.com")).price(2)
+                           .imageUrl("http://walmart.com").price(2)
                            .percentageOfDiscount(50).build()]]
         "1"    | [[Product.builder().id(1).brand("brand aba").description("description")
-                           .imageUrl(new URL("http://walmart.com")).price(2)
+                           .imageUrl("http://walmart.com").price(2)
                            .percentageOfDiscount(0).build()]]
     }
 

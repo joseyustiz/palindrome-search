@@ -19,7 +19,7 @@ public class ProductSearchController {
     private final ProductSearchService service;
 
     @PostMapping(path = "/by-phrase", produces = "application/json")
-    public List<?> getProductsByPhrase(@Valid @RequestBody SearchPhraseDto dto) {
+    public List<Product> getProductsByPhrase(@Valid @RequestBody SearchPhraseDto dto) {
         List<Product> palindrome = service.getProductsByPhrase(dto.getPhrase());
         return palindrome;
     }

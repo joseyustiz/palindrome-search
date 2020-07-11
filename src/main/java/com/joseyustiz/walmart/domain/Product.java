@@ -12,7 +12,7 @@ import java.net.URL;
 @AllArgsConstructor
 public class Product {
     @Min(value = 0)
-    private final Long id;
+    private final Integer id;
 
     @NotBlank
     private final String description;
@@ -21,7 +21,8 @@ public class Product {
     private final String brand;
 
     @NotNull
-    private final URL imageUrl;
+    @org.hibernate.validator.constraints.URL
+    private final String imageUrl;
 
     @NotNull
     @DecimalMin(value = "0")
@@ -33,7 +34,7 @@ public class Product {
     @Digits(integer = 3, fraction = 2)
     private Double percentageOfDiscount;
 
-    public Product(Long id, String description, String brand, URL imageUrl, Double price) {
+    public Product(Integer id, String description, String brand, String imageUrl, Double price) {
         this(id,description,brand,imageUrl,price,0.0);
     }
 

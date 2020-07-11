@@ -2,6 +2,7 @@ package com.joseyustiz.walmart.repository
 
 import com.joseyustiz.walmart.repository.entity.Product
 import com.joseyustiz.walmart.repository.entity.ProductMapper
+import org.springframework.data.mongodb.core.MongoTemplate
 import spock.lang.Specification
 
 class ProductDataAccessImplSpec extends Specification{
@@ -9,7 +10,7 @@ class ProductDataAccessImplSpec extends Specification{
         given:
         def id = 1
         ProductRepository repo = Stub(ProductRepository)
-        repo.findById(_) >> Optional.empty()
+        repo.findById(_ as Integer) >> Optional.empty()
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
         when:
@@ -24,10 +25,10 @@ class ProductDataAccessImplSpec extends Specification{
         def id = 11
         def brand = "brand aba"
         def description = "description"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
-        repo.findById(_) >> Optional.of(Product.builder().id(id).brand(brand).description(description)
-                .imageUrl(url).price(price).build())
+        repo.findById(_ as Integer) >> Optional.of(Product.builder().id(id).brand(brand).description(description)
+                .image(url.toString()).price(price).build())
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
         when:
@@ -63,10 +64,10 @@ class ProductDataAccessImplSpec extends Specification{
         def id = 11
         def brand = "brand aba"
         def description = "description"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
         repo.findAllBy(_) >> [Product.builder().id(id).brand(brand).description(description)
-                .imageUrl(url).price(price).build()]
+                .image(url.toString()).price(price).build()]
 
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)

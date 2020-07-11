@@ -43,9 +43,9 @@ class ProductSearchServiceImplSpec extends Specification {
         where:
         phrase        | listOfProducts
         "brand"       | [Product.builder().id(1).brand("brand aba").description("description")
-                                 .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                                 .imageUrl("http://walmart.com").price(2).build()]
         "description" | [Product.builder().id(1).brand("brand aba").description("description")
-                                 .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                                 .imageUrl("http://walmart.com").price(2).build()]
     }
     @Unroll
     def "no palindrome id='#phrase' has not discount"() {
@@ -60,7 +60,7 @@ class ProductSearchServiceImplSpec extends Specification {
         where:
         phrase        | listOfProducts
         "1"           | [Product.builder().id(1).brand("brand aba").description("description")
-                                 .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                                 .imageUrl("http://walmart.com").price(2).build()]
     }
     @Unroll
     def "palindrome word='#phrase' does have discount"() {
@@ -74,15 +74,15 @@ class ProductSearchServiceImplSpec extends Specification {
         where:
         phrase | listOfProducts
         "aba"  | [Product.builder().id(11).brand("brand aba").description("description")
-                          .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                          .imageUrl("http://walmart.com").price(2).build()]
         "11"   | [Product.builder().id(11).brand("brand aba").description("description")
-                          .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                          .imageUrl("http://walmart.com").price(2).build()]
     }
 
     @Unroll
     def "palindrome id='#phrase' does have discount"() {
         given:
-        gateway.findById(Long.parseLong(phrase)) >> listOfProducts
+        gateway.findById(Integer.valueOf(phrase)) >> listOfProducts
         when:
         def products = service.getProductsByPhrase(phrase)
         then:
@@ -91,7 +91,7 @@ class ProductSearchServiceImplSpec extends Specification {
         where:
         phrase | listOfProducts
         "11"   | [Product.builder().id(11).brand("brand aba").description("description")
-                          .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                          .imageUrl("http://walmart.com").price(2).build()]
     }
 
     @Unroll
@@ -106,9 +106,9 @@ class ProductSearchServiceImplSpec extends Specification {
         products.every({ p -> p.getPrice() / 2 == p.getPriceMinusDiscount() && p.getPercentageOfDiscount() == 50.0d })
         where:
         phrase | listOfProducts
-        "11"   | [Product.builder().id(22).brand("brand aba 11").description("description").imageUrl(new URL("http://walmart.com")).price(2).build(),
-                  Product.builder().id(222).brand("brand aba 111").description("description").imageUrl(new URL("http://walmart.com")).price(2).build()]
+        "11"   | [Product.builder().id(22).brand("brand aba 11").description("description").imageUrl("http://walmart.com").price(2).build(),
+                  Product.builder().id(222).brand("brand aba 111").description("description").imageUrl("http://walmart.com").price(2).build()]
         "33"   | [Product.builder().id(22).brand("brand aba").description("description 33")
-                          .imageUrl(new URL("http://walmart.com")).price(2).build()]
+                          .imageUrl("http://walmart.com").price(2).build()]
     }
 }

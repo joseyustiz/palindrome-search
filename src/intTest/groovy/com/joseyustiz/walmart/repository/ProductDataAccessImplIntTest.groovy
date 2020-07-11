@@ -28,13 +28,13 @@ class ProductDataAccessImplIntTest extends Specification{
 
     def "search by id of a product that does exist"(){
         given:
-        long id = 11
+        def id = 11
         def brand = "brand aba"
         def description = "description"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
-        repo.save(Product.builder().id(id).brand(brand).description(description).imageUrl(url).price(price).build())
-        repo.save(Product.builder().id(id+1).brand("brand").description("description").imageUrl(url).price(price).build())
+        repo.save(Product.builder().id(id).brand(brand).description(description).image(url).price(price).build())
+        repo.save(Product.builder().id(id+1).brand("brand").description("description").image(url).price(price).build())
 
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
@@ -55,13 +55,13 @@ class ProductDataAccessImplIntTest extends Specification{
     def "search by brand or description of a product that does not exist"(){
         given:
         def phrase = "xyz"
-        long id = 11
+        def id = 11
         def brand = "brand aba"
         def description = "description"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
-        repo.save(Product.builder().id(id).brand(brand).description(description).imageUrl(url).price(price).build())
-        repo.save(Product.builder().id(id+1).brand("brand").description("description").imageUrl(url).price(price).build())
+        repo.save(Product.builder().id(id).brand(brand).description(description).image(url).price(price).build())
+        repo.save(Product.builder().id(id+1).brand("brand").description("description").image(url).price(price).build())
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
         when:
@@ -73,13 +73,13 @@ class ProductDataAccessImplIntTest extends Specification{
     def "search by brand or description of a product that does exist"(){
         given:
         def phrase = "aba"
-        long id = 11
+        def id = 11
         def brand = "brand aba"
         def description = "description"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
-        repo.save(Product.builder().id(id).brand(brand).description(description).imageUrl(url).price(price).build())
-        repo.save(Product.builder().id(id+1).brand("brand").description("description").imageUrl(url).price(price).build())
+        repo.save(Product.builder().id(id).brand(brand).description(description).image(url).price(price).build())
+        repo.save(Product.builder().id(id+1).brand("brand").description("description").image(url).price(price).build())
 
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)

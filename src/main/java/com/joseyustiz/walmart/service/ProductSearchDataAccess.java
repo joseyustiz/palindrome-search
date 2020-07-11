@@ -9,5 +9,5 @@ public interface ProductSearchDataAccess {
 
     List<Product> findByBrandOrDescription(String phrase);
 
-    Optional<Product> findById(Long id);
+    Optional<Product> findById(Integer id);
 }

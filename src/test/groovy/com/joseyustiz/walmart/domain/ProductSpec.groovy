@@ -14,7 +14,7 @@ class ProductSpec extends Specification {
         def id = 1
         def description = "description"
         def brand = "brand"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def price = 2
         when:
         def product = new Product(id, description, brand, url, price)
@@ -35,7 +35,7 @@ class ProductSpec extends Specification {
         def id = 1
         def description = "description"
         def brand = "brand"
-        def url = new URL("http://walmart.com")
+        def url = "http://walmart.com"
         def product = Product.builder().id(id).description(description).brand(brand).imageUrl(url).price(price).build()
         when:
         product.setPercentageOfDiscount(discount)
