@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ProductSearchService {
 
-    List<Product> palindrome(String phrase);
+    List<Product> getProductsByPhrase(String phrase);
 }

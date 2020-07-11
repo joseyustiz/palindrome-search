@@ -52,7 +52,7 @@ class ProductSearchControllerSpec extends Specification {
 
     def "when an exception is thrown the endpoint return Internal Server Error"() {
         given:
-        service.palindrome(_) >> { throw new Exception() }
+        service.getProductsByPhrase(_) >> { throw new Exception() }
         def searchPhrase = new SearchPhraseDto(PALINDROME)
         when:
         def response = mockMvc.perform(post(url).header("Content-Type", MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ class ProductSearchControllerSpec extends Specification {
 
     def "when la list of product is return fron the service it is successfully return as json"() {
         given:
-        service.palindrome(phrase) >> products
+        service.getProductsByPhrase(phrase) >> products
         def searchPhrase = new SearchPhraseDto(phrase)
         when:
         def response = mockMvc.perform(post(url).header("Content-Type", MediaType.APPLICATION_JSON)
