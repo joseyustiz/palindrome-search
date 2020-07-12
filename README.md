@@ -45,7 +45,7 @@ Run the following command in the root of the project:
 ./gradlew bootBuildImage
 ```
 
-It takes advantage of the last available feature of **Buildpacks** from Spring Boot 2.3.x, which creates the image **docker.io/library/walmart:0.0.1-SNAPSHOT**   
+It takes advantage of the latest available features of **Buildpacks** from Spring Boot 2.3.x, which creates the image **docker.io/library/walmart:0.0.1-SNAPSHOT**   
 
 5. Run the Spring Boot application
 
@@ -53,10 +53,10 @@ It takes advantage of the last available feature of **Buildpacks** from Spring B
 docker run --rm --network api-net -e SPRING_DATA_MONGODB_USERNAME=productListUser -e SPRING_DATA_MONGODB_PASSWORD=productListPassword -e SPRING_DATA_MONGODB_HOST=mongodb-local -e SPRING_DATA_MONGODB_PORT=27017 -p 8080:8080 --name backend docker.io/library/walmart:0.0.1-SNAPSHOT
 ```
 
-productListUser and productListPassword are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
+**productListUser** and **productListPassword** are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
 
-## Use of full-text instead of Regex
-This application uses full-text search of Mongo DB, which provides a better performance and scalability than Regex. For more information, go to https://docs.mongodb.com/manual/text-search 
+## Using full-text search instead of Regex search
+This application uses full-text search technology of Mongo DB, which provides a better performance and scalability than Regex search. For more information, go to https://docs.mongodb.com/manual/text-search 
 
 ## Example requests
 ### Bad Request Search
@@ -265,4 +265,11 @@ curl --location --request GET 'localhost:8080/products?phrase=aywoc'
         "priceMinusDiscount": 106757.0
     }
 ]
+```
+### Searching by a Phrase That Isn't Stored at the Brand or Description of the Product
+```console
+curl --location --request GET 'localhost:8080/products?phrase=abc'
+```
+```json
+[]
 ```
