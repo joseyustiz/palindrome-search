@@ -5,7 +5,6 @@ import com.joseyustiz.walmart.util.Util;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

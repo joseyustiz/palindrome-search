@@ -2,18 +2,11 @@ package com.joseyustiz.walmart.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.joseyustiz.walmart.controller.dto.SearchPhraseDto
-import com.joseyustiz.walmart.controller.error.ErrorControllerAdvice
 import com.joseyustiz.walmart.domain.Product
 import com.joseyustiz.walmart.service.ProductSearchService
-import org.springframework.http.MediaType
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
-
-import static org.hamcrest.Matchers.hasSize
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
+import spock.lang.Subject
 
 class ProductSearchControllerSpec extends Specification {
     public static final String PALINDROME = "aba"
@@ -23,44 +16,25 @@ class ProductSearchControllerSpec extends Specification {
     private def mockMvc
     @Shared
     private ProductSearchService service
+    @Shared
+    @Subject
+    private ProductSearchController controller
 
     void setup() {
         service = Stub(ProductSearchService)
-        mockMvc = standaloneSetup(new ProductSearchController(service)).setControllerAdvice(new ErrorControllerAdvice()).build()
-    }
-    @Unroll
-    def "search invalid phrase='#phrase' return a Bad Request"() {
-        given:
-        def searchPhrase = new SearchPhraseDto(phrase)
-        when:
-        def response = mockMvc.perform(post(url).header("Content-Type", MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(searchPhrase))
-        )
-        then:
-        response.andExpect(status().isBadRequest())
-        response.andExpect(jsonPath('$.errors', hasSize(numberConstrainViolations)))
-
-        where:
-        phrase | numberConstrainViolations
-        "ab"   | 1
-        "abç"  | 1
-        ""     | 2
-        null   | 2
-
-
+        controller = new ProductSearchController(service)
     }
 
-    def "when an exception is thrown the endpoint return Internal Server Error"() {
+    def "when an exception is thrown it is leave to the Controller Avise"() {
         given:
-        service.getProductsByPhrase(_) >> { throw new Exception() }
-        def searchPhrase = new SearchPhraseDto(PALINDROME)
+        def message = "Exception Message"
+        service.getProductsByPhrase(_) >> { throw new Exception(message) }
         when:
-        def response = mockMvc.perform(post(url).header("Content-Type", MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(searchPhrase))
-        )
+        controller.getProductsByPhrase(PALINDROME)
+
         then:
-        response.andExpect(status().isInternalServerError())
-        response.andExpect(content().string("{\"status\":\"INTERNAL_SERVER_ERROR\",\"errors\":[\"error occurred\"]}"))
+        def e = thrown(Exception)
+        e.getCause().getMessage() == message
 
     }
 
@@ -69,12 +43,9 @@ class ProductSearchControllerSpec extends Specification {
         service.getProductsByPhrase(phrase) >> products
         def searchPhrase = new SearchPhraseDto(phrase)
         when:
-        def response = mockMvc.perform(post(url).header("Content-Type", MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(searchPhrase))
-        )
+        def productsReturned = controller.getProductsByPhrase(phrase)
         then:
-        response.andExpect(status().isOk())
-        response.andExpect(content().string(objectMapper.writeValueAsString(products)))
+        productsReturned == products
         where:
         phrase | products
         "aba"  | [[Product.builder().id(1).brand("brand aba").description("description")
