@@ -1,14 +1,13 @@
-#README
-##Architecture and Patterns
+## Architecture and Patterns
 * Layered Architecture
 * Gateway (Enterprise Application Pattern)
 * Builder
 
-##Principles and Practices
+## Principles and Practices
 * SOLID
 * TDD
 
-##Technology
+## Technology
 * Java 8
 * Spring Boot
 * Spring MVC
@@ -19,8 +18,7 @@
 * Gradle
 * MongoDB
 
-
-##Installation Process
+## Installation Process
 1. Run the database container:
 
 Follow the instructions at https://github.com/walmartdigital/products-db
@@ -57,10 +55,10 @@ docker run --rm --network api-net -e SPRING_DATA_MONGODB_USERNAME=productListUse
 
 productListUser and productListPassword are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
 
-##Use of full-text instead of Regex
+## Use of full-text instead of Regex
 This application uses full-text search of Mongo DB, which provides a better performance and scalability than Regex. For more information, go to https://docs.mongodb.com/manual/text-search 
 
-##Example requests
+## Example requests
 ### Bad Request Search
 ```console
 curl --location --request GET 'localhost:8080/products?phrase=-11'
@@ -75,7 +73,7 @@ curl --location --request GET 'localhost:8080/products?phrase=-11'
  }
 ```
  
-The application allow letters form the spanish language, numbers and spaces 
+The application allows letters from the spanish alphabet, numbers and spaces 
 
 ### Searcing by a Phrase Shorter Than 3 Character
 ```console
