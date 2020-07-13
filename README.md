@@ -60,7 +60,7 @@ This application uses full-text search technology of Mongo DB, which provides a 
 
 ## Example requests
 
-The implementation supports paging and sorting by attributes. The attributed are: **page**, **size**, **sort** 
+The implementation supports paging. The optional attributes are: **page** and **size**. 
 
 ### Bad Request Search
 ```console
@@ -159,38 +159,20 @@ curl --location --request GET 'localhost:8080/products?phrase=11&page=1&size=5'
 ```
 ### Searching by Palindrome Phrase
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=saas&sort=priceMinusDiscount,asc'
+curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=2'
 ```
 
 ```json
 {
     "content": [
         {
-            "id": 1353,
-            "description": "aywoc ñonuge",
+            "id": 1826,
+            "description": "bcth janwihml",
             "brand": "saas",
-            "imageUrl": "www.lider.cl/catalogo/images/toysIcon.svg",
-            "price": 581781.0,
+            "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
+            "price": 569448.0,
             "percentageOfDiscount": 50.0,
-            "priceMinusDiscount": 290890.5
-        },
-        {
-            "id": 1365,
-            "description": "veat yicpskña",
-            "brand": "saas",
-            "imageUrl": "www.lider.cl/catalogo/images/gamesIcon.svg",
-            "price": 139252.0,
-            "percentageOfDiscount": 50.0,
-            "priceMinusDiscount": 69626.0
-        },
-        {
-            "id": 1631,
-            "description": "doww inunojbs",
-            "brand": "saas",
-            "imageUrl": "www.lider.cl/catalogo/images/homeIcon.svg",
-            "price": 589174.0,
-            "percentageOfDiscount": 50.0,
-            "priceMinusDiscount": 294587.0
+            "priceMinusDiscount": 284724.0
         },
         {
             "id": 1716,
@@ -200,40 +182,31 @@ curl --location --request GET 'localhost:8080/products?phrase=saas&sort=priceMin
             "price": 891826.0,
             "percentageOfDiscount": 50.0,
             "priceMinusDiscount": 445913.0
-        },
-        {
-            "id": 1826,
-            "description": "bcth janwihml",
-            "brand": "saas",
-            "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
-            "price": 569448.0,
-            "percentageOfDiscount": 50.0,
-            "priceMinusDiscount": 284724.0
         }
     ],
     "pageable": {
         "sort": {
-            "sorted": true,
-            "unsorted": false,
-            "empty": false
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
         },
         "pageNumber": 0,
-        "pageSize": 20,
+        "pageSize": 2,
         "offset": 0,
         "unpaged": false,
         "paged": true
     },
-    "last": true,
-    "totalPages": 1,
+    "last": false,
+    "totalPages": 3,
     "totalElements": 5,
-    "numberOfElements": 5,
+    "numberOfElements": 2,
     "first": true,
     "sort": {
-        "sorted": true,
-        "unsorted": false,
-        "empty": false
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
     },
-    "size": 20,
+    "size": 2,
     "number": 0,
     "empty": false
 }
