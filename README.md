@@ -60,7 +60,7 @@ This application uses full-text search technology of Mongo DB, which provides a 
 
 ## Example requests
 
-The implementation supports paging. The optional attributes are: **page** and **size**. 
+The implementation supports paging and sorting. The optional attributes are: **page**, **size** and **sort**. Sorting works only for all the fields, excepting percentageOfDiscount and priceMinusDiscount.
 
 ### Bad Request Search
 ```console
@@ -76,7 +76,7 @@ curl --location --request GET 'localhost:8080/products?phrase=-11'
  }
 ```
  
-The application allows letters from the spanish alphabet, numbers and spaces 
+The application allows characters from the spanish alphabet, numbers and spaces 
 
 ### Searcing by a Phrase Shorter Than 3 Character
 ```console
@@ -159,12 +159,21 @@ curl --location --request GET 'localhost:8080/products?phrase=11&page=1&size=5'
 ```
 ### Searching by Palindrome Phrase
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=2'
+curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=5&sort=price,asc'
 ```
 
 ```json
 {
     "content": [
+        {
+            "id": 1365,
+            "description": "veat yicpskña",
+            "brand": "saas",
+            "imageUrl": "www.lider.cl/catalogo/images/gamesIcon.svg",
+            "price": 139252.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 69626.0
+        },
         {
             "id": 1826,
             "description": "bcth janwihml",
@@ -173,6 +182,24 @@ curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=2
             "price": 569448.0,
             "percentageOfDiscount": 50.0,
             "priceMinusDiscount": 284724.0
+        },
+        {
+            "id": 1353,
+            "description": "aywoc ñonuge",
+            "brand": "saas",
+            "imageUrl": "www.lider.cl/catalogo/images/toysIcon.svg",
+            "price": 581781.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 290890.5
+        },
+        {
+            "id": 1631,
+            "description": "doww inunojbs",
+            "brand": "saas",
+            "imageUrl": "www.lider.cl/catalogo/images/homeIcon.svg",
+            "price": 589174.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 294587.0
         },
         {
             "id": 1716,
@@ -186,27 +213,27 @@ curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=2
     ],
     "pageable": {
         "sort": {
-            "sorted": false,
-            "unsorted": true,
-            "empty": true
+            "sorted": true,
+            "unsorted": false,
+            "empty": false
         },
         "pageNumber": 0,
-        "pageSize": 2,
+        "pageSize": 5,
         "offset": 0,
         "unpaged": false,
         "paged": true
     },
-    "last": false,
-    "totalPages": 3,
+    "last": true,
+    "totalPages": 1,
     "totalElements": 5,
-    "numberOfElements": 2,
+    "numberOfElements": 5,
     "first": true,
     "sort": {
-        "sorted": false,
-        "unsorted": true,
-        "empty": true
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
     },
-    "size": 2,
+    "size": 5,
     "number": 0,
     "empty": false
 }
