@@ -5,11 +5,13 @@ import com.joseyustiz.walmart.repository.entity.Product
 import com.joseyustiz.walmart.repository.entity.ProductMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import org.springframework.data.domain.PageRequest
 import spock.lang.Specification
 
 @DataMongoTest(excludeAutoConfiguration = RepositoryConfig.class)
 class ProductDataAccessImplIntTest extends Specification{
     @Autowired ProductRepository repo
+    private PageRequest defaultPaging = PageRequest.of(0, 20)
 
     void setup() {
         repo.deleteAll()
@@ -65,7 +67,7 @@ class ProductDataAccessImplIntTest extends Specification{
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
         when:
-        def products = da.findByBrandOrDescription(phrase)
+        def products = da.findByBrandOrDescription(phrase, defaultPaging)
         then:
         products.isEmpty()
     }
@@ -84,7 +86,7 @@ class ProductDataAccessImplIntTest extends Specification{
         ProductMapper mapper = new ProductMapper()
         ProductDataAccessImpl da = new ProductDataAccessImpl(repo, mapper)
         when:
-        def products = da.findByBrandOrDescription(phrase)
+        def products = da.findByBrandOrDescription(phrase, defaultPaging)
         then:
         products.size() == 1
         with(products[0]){

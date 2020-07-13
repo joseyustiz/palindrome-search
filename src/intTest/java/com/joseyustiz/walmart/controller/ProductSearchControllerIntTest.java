@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -30,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ProductSearchControllerIntTest {
     public static final String PHRASE_REQUEST_PARAM = "phrase";
-    private final String PALINDROME = "aba";
     private final String url = "/products";
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
@@ -66,8 +66,9 @@ public class ProductSearchControllerIntTest {
 
     @Test
     void whenAnExceptionIsThrown_ReturnInternalServerError() throws Exception {
-        when(service.getProductsByPhrase(any())).thenThrow(new RuntimeException());
+        when(service.getProductsByPhrase(any(), any())).thenThrow(new RuntimeException());
 
+        String PALINDROME = "aba";
         ResultActions response = this.mockMvc.perform(get(url)
                 .param(PHRASE_REQUEST_PARAM, PALINDROME));
 
@@ -79,12 +80,11 @@ public class ProductSearchControllerIntTest {
     @ParameterizedTest
     @MethodSource("validProductList")
     void whenListOfProductIsReturnFronTheService_ItIsSuccessfullyReturnAsJson(String phrase, List<Product> products) throws Exception {
-        when(service.getProductsByPhrase(phrase)).thenReturn(products);
-        ResultActions response = this.mockMvc.perform(get(url)
-                .param(PHRASE_REQUEST_PARAM, phrase));
+        when(service.getProductsByPhrase(any(), any())).thenReturn(new PageImpl<>(products));
+        ResultActions response = this.mockMvc.perform(get(url).param(PHRASE_REQUEST_PARAM, phrase).param("page", "1").param("size", "5"));
 
         response.andExpect(status().isOk());
-        response.andExpect(content().string(objectMapper.writeValueAsString(products)));
+        response.andExpect(content().string(objectMapper.writeValueAsString(new PageImpl<>(products))));
 
     }
 }

@@ -5,13 +5,11 @@ import com.joseyustiz.walmart.repository.entity.ProductMapper;
 import com.joseyustiz.walmart.service.ProductSearchDataAccess;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.TextCriteria;
-import org.springframework.data.mongodb.core.query.TextQuery;
 
-import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -21,11 +19,13 @@ import static java.util.stream.Collectors.toList;
 public class ProductDataAccessImpl implements ProductSearchDataAccess {
     private final ProductRepository repo;
     private final ProductMapper mapper;
+
     @Override
-    public List<Product> findByBrandOrDescription(String phrase) {
+    public Page<Product> findByBrandOrDescription(String phrase, Pageable pageable) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(phrase);
-        List<com.joseyustiz.walmart.repository.entity.Product> products = repo.findAllBy(criteria);
-        return products.stream().map(p -> mapper.map(p).get()).collect(toList());
+        Page<com.joseyustiz.walmart.repository.entity.Product> products = repo.findAllBy(criteria, pageable);
+        return new PageImpl<>(products.get().map(p -> mapper.map(p).get()).collect(toList()));
+
     }
 
     @Override

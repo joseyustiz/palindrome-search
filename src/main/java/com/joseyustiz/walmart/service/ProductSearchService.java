@@ -1,10 +1,10 @@
 package com.joseyustiz.walmart.service;
 
 import com.joseyustiz.walmart.domain.Product;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductSearchService {
 
-    List<Product> getProductsByPhrase(String phrase);
+    Page<Product> getProductsByPhrase(String phrase, Pageable pageable);
 }

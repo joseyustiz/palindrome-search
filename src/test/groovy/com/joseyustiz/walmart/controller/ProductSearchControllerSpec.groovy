@@ -1,9 +1,10 @@
 package com.joseyustiz.walmart.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.joseyustiz.walmart.controller.dto.SearchPhraseDto
 import com.joseyustiz.walmart.domain.Product
 import com.joseyustiz.walmart.service.ProductSearchService
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
@@ -19,6 +20,7 @@ class ProductSearchControllerSpec extends Specification {
     @Shared
     @Subject
     private ProductSearchController controller
+    private PageRequest defaultPaging = PageRequest.of(0, 20)
 
     void setup() {
         service = Stub(ProductSearchService)
@@ -28,9 +30,9 @@ class ProductSearchControllerSpec extends Specification {
     def "when an exception is thrown it is leave to the Controller Avise"() {
         given:
         def message = "Exception Message"
-        service.getProductsByPhrase(_) >> { throw new Exception(message) }
+        service.getProductsByPhrase(_, _) >> { throw new Exception(message) }
         when:
-        controller.getProductsByPhrase(PALINDROME)
+        controller.getProductsByPhrase(PALINDROME, defaultPaging)
 
         then:
         def e = thrown(Exception)
@@ -40,20 +42,20 @@ class ProductSearchControllerSpec extends Specification {
 
     def "when la list of product is return fron the service it is successfully return as json"() {
         given:
-        service.getProductsByPhrase(phrase) >> products
-        def searchPhrase = new SearchPhraseDto(phrase)
+        service.getProductsByPhrase(phrase, defaultPaging) >> products
+
         when:
-        def productsReturned = controller.getProductsByPhrase(phrase)
+        def productsReturned = controller.getProductsByPhrase(phrase, defaultPaging)
         then:
         productsReturned == products
         where:
         phrase | products
-        "aba"  | [[Product.builder().id(1).brand("brand aba").description("description")
-                           .imageUrl("http://walmart.com").price(2)
-                           .percentageOfDiscount(50).build()]]
-        "1"    | [[Product.builder().id(1).brand("brand aba").description("description")
-                           .imageUrl("http://walmart.com").price(2)
-                           .percentageOfDiscount(0).build()]]
+        "aba"  | new PageImpl<>([[Product.builder().id(1).brand("brand aba").description("description")
+                                          .imageUrl("http://walmart.com").price(2)
+                                          .percentageOfDiscount(50).build()]])
+        "1"    | new PageImpl<>([[Product.builder().id(1).brand("brand aba").description("description")
+                                          .imageUrl("http://walmart.com").price(2)
+                                          .percentageOfDiscount(0).build()]])
     }
 
 }

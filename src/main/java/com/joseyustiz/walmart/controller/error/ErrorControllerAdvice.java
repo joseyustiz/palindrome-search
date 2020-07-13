@@ -99,7 +99,8 @@ public class ErrorControllerAdvice extends ResponseEntityExceptionHandler {
         logger.info(ex.getClass().getName());
         final List<String> errors = new ArrayList<>();
         for (final ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
+            int i = violation.getPropertyPath().toString().lastIndexOf(".") + 1;
+            errors.add(violation.getPropertyPath().toString().substring(i) + ": " + violation.getMessage());
         }
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, errors);
