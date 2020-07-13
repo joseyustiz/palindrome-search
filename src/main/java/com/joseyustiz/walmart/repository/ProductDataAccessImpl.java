@@ -24,7 +24,8 @@ public class ProductDataAccessImpl implements ProductSearchDataAccess {
     public Page<Product> findByBrandOrDescription(String phrase, Pageable pageable) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(phrase);
         Page<com.joseyustiz.walmart.repository.entity.Product> products = repo.findAllBy(criteria, pageable);
-        return new PageImpl<>(products.get().map(p -> mapper.map(p).get()).collect(toList()));
+        PageImpl<Product> productPage = new PageImpl<>(products.get().map(p -> mapper.map(p).get()).collect(toList()), pageable, products.getTotalElements());
+        return productPage;
 
     }
 

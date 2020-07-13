@@ -90,186 +90,209 @@ curl --location --request GET 'localhost:8080/products?phrase=ab'
 
 ### Searching by ID
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=1'
+curl --location --request GET 'localhost:8080/products?phrase=1&page=1&size=5'
 ```
 ```json
-[
-    {
-        "id": 1,
-        "description": "rlñlw brhrka",
-        "brand": "ooy eqrceli",
-        "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
-        "price": 498724.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 498724.0
-    }
-]
+{
+    "content": [
+        {
+            "id": 1,
+            "description": "rlñlw brhrka",
+            "brand": "ooy eqrceli",
+            "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
+            "price": 498724.0,
+            "percentageOfDiscount": 0.0,
+            "priceMinusDiscount": 498724.0
+        }
+    ],
+    "pageable": "INSTANCE",
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 1,
+    "first": true,
+    "numberOfElements": 1,
+    "sort": {
+        "unsorted": true,
+        "sorted": false,
+        "empty": true
+    },
+    "size": 1,
+    "number": 0,
+    "empty": false
+}
 ```
 ### Searching by Palindrome ID
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=1'
+curl --location --request GET 'localhost:8080/products?phrase=11&page=1&size=5'
 ```
 ```json
-[
-    {
-        "id": 11,
-        "description": "fqfwt ikpxov",
-        "brand": "iñmfdpd",
-        "imageUrl": "www.lider.cl/catalogo/images/gamesIcon.svg",
-        "price": 533752.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 266876.0
-    }
-]
+{
+    "content": [
+        {
+            "id": 11,
+            "description": "fqfwt ikpxov",
+            "brand": "iñmfdpd",
+            "imageUrl": "www.lider.cl/catalogo/images/gamesIcon.svg",
+            "price": 533752.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 266876.0
+        }
+    ],
+    "pageable": "INSTANCE",
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 1,
+    "first": true,
+    "numberOfElements": 1,
+    "sort": {
+        "unsorted": true,
+        "sorted": false,
+        "empty": true
+    },
+    "size": 1,
+    "number": 0,
+    "empty": false
+}
 ```
 ### Searching by Palindrome Phrase
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=saas'
+curl --location --request GET 'localhost:8080/products?phrase=saas&page=1&size=2'
 ```
 
 ```json
-[
-    {
-        "id": 1826,
-        "description": "bcth janwihml",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
-        "price": 569448.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 284724.0
+{
+    "content": [
+        {
+            "id": 1826,
+            "description": "bcth janwihml",
+            "brand": "saas",
+            "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
+            "price": 569448.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 284724.0
+        },
+        {
+            "id": 1716,
+            "description": "rgvqme kvska",
+            "brand": "saas",
+            "imageUrl": "www.lider.cl/catalogo/images/bedRoomIcon.svg",
+            "price": 891826.0,
+            "percentageOfDiscount": 50.0,
+            "priceMinusDiscount": 445913.0
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+        },
+        "pageNumber": 0,
+        "pageSize": 2,
+        "offset": 0,
+        "unpaged": false,
+        "paged": true
     },
-    {
-        "id": 1716,
-        "description": "rgvqme kvska",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/bedRoomIcon.svg",
-        "price": 891826.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 445913.0
+    "last": false,
+    "totalPages": 3,
+    "totalElements": 5,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
     },
-    {
-        "id": 1631,
-        "description": "doww inunojbs",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/homeIcon.svg",
-        "price": 589174.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 294587.0
-    },
-    {
-        "id": 1365,
-        "description": "veat yicpskña",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/gamesIcon.svg",
-        "price": 139252.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 69626.0
-    },
-    {
-        "id": 1353,
-        "description": "aywoc ñonuge",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/toysIcon.svg",
-        "price": 581781.0,
-        "percentageOfDiscount": 50.0,
-        "priceMinusDiscount": 290890.5
-    }
-]
+    "size": 2,
+    "number": 0,
+    "empty": false
+}
 ```
 ### Searching by a No-Palindrome Phrase
 ```console
-curl --location --request GET 'localhost:8080/products?phrase=aywoc'
+curl --location --request GET 'localhost:8080/products?phrase=aywoc&page=1&size=2'
 ```
 
 ```json
-[
-    {
-        "id": 2911,
-        "description": "aywoc ñonuge",
-        "brand": "ikd qmflpsq",
-        "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
-        "price": 486839.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 486839.0
+{
+    "content": [
+        {
+            "id": 2911,
+            "description": "aywoc ñonuge",
+            "brand": "ikd qmflpsq",
+            "imageUrl": "www.lider.cl/catalogo/images/babyIcon.svg",
+            "price": 486839.0,
+            "percentageOfDiscount": 0.0,
+            "priceMinusDiscount": 486839.0
+        },
+        {
+            "id": 2705,
+            "description": "aywoc ñonuge",
+            "brand": "yeazgeejt",
+            "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
+            "price": 21742.0,
+            "percentageOfDiscount": 0.0,
+            "priceMinusDiscount": 21742.0
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+        },
+        "pageNumber": 0,
+        "pageSize": 2,
+        "offset": 0,
+        "unpaged": false,
+        "paged": true
     },
-    {
-        "id": 2705,
-        "description": "aywoc ñonuge",
-        "brand": "yeazgeejt",
-        "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
-        "price": 21742.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 21742.0
+    "last": false,
+    "totalPages": 5,
+    "totalElements": 9,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
     },
-    {
-        "id": 1789,
-        "description": "aywoc ñonuge",
-        "brand": "weñxoab",
-        "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
-        "price": 874206.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 874206.0
-    },
-    {
-        "id": 1381,
-        "description": "aywoc ñonuge",
-        "brand": "lkdznamm",
-        "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
-        "price": 214450.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 214450.0
-    },
-    {
-        "id": 1353,
-        "description": "aywoc ñonuge",
-        "brand": "saas",
-        "imageUrl": "www.lider.cl/catalogo/images/toysIcon.svg",
-        "price": 581781.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 581781.0
-    },
-    {
-        "id": 1106,
-        "description": "aywoc ñonuge",
-        "brand": "owh xenvxen",
-        "imageUrl": "www.lider.cl/catalogo/images/whiteLineIcon.svg",
-        "price": 428488.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 428488.0
-    },
-    {
-        "id": 909,
-        "description": "aywoc ñonuge",
-        "brand": "fumgxfd",
-        "imageUrl": "www.lider.cl/catalogo/images/bedRoomIcon.svg",
-        "price": 486693.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 486693.0
-    },
-    {
-        "id": 863,
-        "description": "aywoc ñonuge",
-        "brand": "hgb dizñchz",
-        "imageUrl": "www.lider.cl/catalogo/images/computerIcon.svg",
-        "price": 110929.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 110929.0
-    },
-    {
-        "id": 116,
-        "description": "aywoc ñonuge",
-        "brand": "jvvxqjq",
-        "imageUrl": "www.lider.cl/catalogo/images/homeIcon.svg",
-        "price": 106757.0,
-        "percentageOfDiscount": 0.0,
-        "priceMinusDiscount": 106757.0
-    }
-]
+    "size": 2,
+    "number": 0,
+    "empty": false
+}
 ```
 ### Searching by a Phrase That Isn't Stored at the Brand or Description of the Product
 ```console
 curl --location --request GET 'localhost:8080/products?phrase=abc'
 ```
 ```json
-[]
+{
+    "content": [],
+    "pageable": {
+        "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+        },
+        "pageNumber": 0,
+        "pageSize": 20,
+        "offset": 0,
+        "unpaged": false,
+        "paged": true
+    },
+    "last": true,
+    "totalPages": 0,
+    "totalElements": 0,
+    "numberOfElements": 0,
+    "first": true,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "size": 20,
+    "number": 0,
+    "empty": true
+}
 ```
