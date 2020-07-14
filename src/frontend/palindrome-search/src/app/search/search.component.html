@@ -1,1 +1,7 @@
-<p>search works!</p>
+<h2>Products Search</h2>
+<form [formGroup]="searchForm" (ngSubmit)="submitSearchForm()">
+    <div class="formGroup">
+        <input class="form-control" formControlName="phrase">
+        <button type="submit" class="btn btn-success" [disabled]="!searchForm.valid">Search</button>
+    </div>
+</form>
