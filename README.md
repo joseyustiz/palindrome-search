@@ -24,25 +24,8 @@
 * Angular
 
 ## Installation Process
-1. Run the database container:
 
-Follow the instructions at https://github.com/walmartdigital/products-db
-
-2. Create a docker network to communicate the Spring Boot application with the database 
-
-```console
-docker network create --attachable api-net
-```
- 
-3. Attach database container to the **api-net** network
-
-```console
-docker network connect api-net mongodb-local
-```
-
-**mongodb-local** is the _default_ name of the database container 
-
-4. Building and packaging the Spring Boot application
+1. Building and packaging the Spring Boot application
 
 Run the following command in the root of the project:
 
@@ -51,35 +34,21 @@ Run the following command in the root of the project:
 ```
 
 It takes advantage of the latest available features of **Buildpacks** from Spring Boot 2.3.x, which creates the image **docker.io/library/walmart:0.0.1-SNAPSHOT**   
-
-5. Run the Spring Boot application
-
+2. Run the containers
 ```console
-docker run --rm --network api-net -e SPRING_DATA_MONGODB_USERNAME=productListUser -e SPRING_DATA_MONGODB_PASSWORD=productListPassword -e SPRING_DATA_MONGODB_HOST=mongodb-local -e SPRING_DATA_MONGODB_PORT=27017 -p 8080:8080 --name backend docker.io/library/walmart:0.0.1-SNAPSHOT
+docker-compose -f app.yml up
 ```
+This commando will run the mongo database (walmart_products-db_1), the spring boot application (walmart_backend_1) and the angular application (walmart_frontend_1) 
 
-**productListUser** and **productListPassword** are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
-
-6. Building and packaging the Spring Boot application
-
-Go to the folder src/frontend/palindrome-search
+3. Import products data to mongo
 ```console
-cd src/frontend/palindrome-search
+docker exec walmart_products-db_1 bash -c 'bash /database/import.sh localhost'
 ```
-Build the docker image
-```console
-build -t palindrome-search .
-```
+NOTE: becase mongoimport requires mongod to be up and running, the import.sh script cannot be called in the Dockerfile.
+  
+4. Open the application in the browser or execute HTTP GET to the endpoints
 
-7. Run the frontend application:
-
-```console
-docker run --network api-net -p 4200:80 palindrome-search
-```
-
-8. Open the application in the browser
-
-Go to http://localhost:4200
+Go to http://localhost:4200 or execute requests to the endpoint as explained at [Example requests](#example-requests). 
 
 ## Using full-text search instead of Regex search
 This application uses full-text search technology of Mongo DB, which provides a better performance and scalability than Regex search. For more information, go to https://docs.mongodb.com/manual/text-search 
