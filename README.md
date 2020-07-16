@@ -7,7 +7,7 @@
 * SOLID
 * TDD
 
-## Technology
+## Backend Technology
 * Java 8
 * Spring Boot
 * Spring MVC
@@ -17,6 +17,11 @@
 * Spock
 * Gradle
 * MongoDB
+
+##Frontend Technology
+* TypeScript
+* Bootstrap
+* Angular
 
 ## Installation Process
 1. Run the database container:
@@ -55,6 +60,21 @@ docker run --rm --network api-net -e SPRING_DATA_MONGODB_USERNAME=productListUse
 
 **productListUser** and **productListPassword** are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
 
+6. Building and packaging the Spring Boot application
+Go to the folder src/frontend/palindrome-search
+```console
+cd src/frontend/palindrome-search
+```
+Build the docker image
+```console
+build -t palindrome-search .
+```
+
+7. Run the frontend application:
+
+```console
+docker run --network api-net -p 4200:80 palindrome-search
+```
 ## Using full-text search instead of Regex search
 This application uses full-text search technology of Mongo DB, which provides a better performance and scalability than Regex search. For more information, go to https://docs.mongodb.com/manual/text-search 
 

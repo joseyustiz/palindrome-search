@@ -1,0 +1,86 @@
+<div class="col-lg-9 col-md-8 col-sm-12 col-padding-12">
+  <h2>Products Search</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm()">
+    <div class="formGroup input-group">
+      <input class="form-control" formControlName="phrase" placeholder="Type what you want to search">
+      <div class="input-group-prepend">
+        <button [disabled]="!searchForm.valid" class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </div>
+
+    <div class="shop-content">
+      <div class="ais-Hits" style>
+        <ul class="ais-Hits-list">
+          <li *ngFor="let product of searchResult.content" class="ais-Hits-item">
+            <div class>
+              <div class="rct-block  product-block flex-column justify-content-between overflow-hidden bg-white">
+                <a href="/product/sku/{{product.id}}"
+                  style="text-decoration: none; height: 100%; display: inline; background-color: white;">
+                  <div class="overlay-wrap overflow-hidden bg-white" id="{{product.id}}"
+                    style="display: flex; align-items: center; justify-content: center; max-height: 240px; min-height: 200px; width: 100%;">
+                    <div class="text-center">
+                      <div class="product-image-shadow"></div>
+                      <div class="d-flex labels-container">
+                        <div class="d-flex internet-exclusive-container">
+                          <span class="internet-exclusive-text">exclusivo internet</span>
+                        </div>
+                      </div>
+                      <div class="bg-white" id="image">
+                        <img class="img-hover-zoom img-fluid m-auto" id="lazy-img" src="http://{{product.imageUrl}}"
+                          style="filter: unset; min-width: 50px; max-height: 240px;">
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class=" product-info">
+                    <div class="d-flex text-left product-description mb-15  ">
+                      <div>
+                        <span class style="font-weight: bold; color: rgb(0, 0, 0);">{{product.brand+ " "}}</span>
+                        <span>{{product.description}}</span>
+                      </div>
+                    </div>
+                    <div class="mb-12">
+                      <div class="walmart-sales-price d-flex " style="display: flex; align-items: center;">
+                        {{product.priceMinusDiscount | number}}
+                        <div *ngIf="product.percentageOfDiscount > 0" class="walmart-discount-percentage-card"
+                          style="margin-top: 1px; margin-left: 6px;">{{product.percentageOfDiscount}}%
+                        </div>
+                      </div>
+                      <div class="d-flex">
+                        <span
+                          class="walmart-reference-price">{{product.price | currency : 'USD' : 'symbol' : '1.0-0'}}</span>
+                      </div>
+                    </div>
+                    <div class="d-flex" style="position: absolute; bottom: 70px;">
+                      <div class="d-flex home-delivery-container">
+                        <span class="home-delivery-image">
+                          <img alt="homeDeliveryIcon" class="vertical-align" height="20"
+                            src="https://www.lider.cl/catalogo/images/despacho-icon.svg" width="17">
+                        </span>
+                        <span class="home-delivery-text">despacho</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="walmart-add-cart-button-container" style="justify-content: center; width: 95%;">
+                        <span class="walmart-add-cart-button pt-5 text-center cp-no-select"
+                          id="addProductToCart">Agregar</span>
+                      </div>
+                      <div class="walmart-add-cart-button-container-alert"></div>
+                    </div>
+                  </div>
+
+                </a>
+
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <ngb-pagination [(page)]="currentPage" [collectionSize]="searchResult.totalPages"
+          [pageSize]="searchResult.pageable.pageSize" class="pagination justify-content-center">
+        </ngb-pagination>
+
+      </div>
+    </div>
+  </form>
+</div>

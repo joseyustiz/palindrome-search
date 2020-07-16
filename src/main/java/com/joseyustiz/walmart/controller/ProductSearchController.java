@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -25,6 +22,7 @@ public class ProductSearchController {
     public static final String REGEX_VALID_CHARACTERS = "^[A-Za-záéíóúüñÁÉÍÓÚÜÑ0-9 ]*$";
     private final ProductSearchService service;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(produces = "application/json")
     public Page<Product> getProductsByPhrase(@RequestParam(name = "phrase") @ValidSearchPhrase @NotBlank(message = "must not be blank")
                                              @Pattern(regexp = REGEX_VALID_CHARACTERS, message = "contains character not allowed")
