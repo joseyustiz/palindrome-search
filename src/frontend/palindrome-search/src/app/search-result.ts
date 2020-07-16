@@ -14,4 +14,5 @@ export interface SearchResult {
     size: number;
     number: number;
     empty: boolean;
+    errorMessage: string;  
   }
