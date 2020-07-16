@@ -61,6 +61,7 @@ docker run --rm --network api-net -e SPRING_DATA_MONGODB_USERNAME=productListUse
 **productListUser** and **productListPassword** are the default credentials of the mongo database from https://github.com/walmartdigital/products-db 
 
 6. Building and packaging the Spring Boot application
+
 Go to the folder src/frontend/palindrome-search
 ```console
 cd src/frontend/palindrome-search
