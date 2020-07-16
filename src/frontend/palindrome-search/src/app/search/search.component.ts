@@ -3,13 +3,15 @@ import {FormGroup, FormBuilder, Validator, Validators} from '@angular/forms'
 import {SearchResult} from '../search-result'
 import {SearchService} from '../search.service'
 import {Search} from '../search'
+
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
+  currentPage: number;
   searchForm: FormGroup;
   searchError: boolean = false;
   searchResult: SearchResult = {
@@ -56,12 +58,12 @@ export class SearchComponent implements OnInit {
     console.log("Form submited!")
     const search: Search = {
       phrase: this.searchForm.get("phrase").value,
-      page: 0,
+      page: this.currentPage,
       size: 20
     };
-
+    console.log("valor de currentPage = "+this.currentPage)
     this.service.searchProduct(search)
-    .subscribe(result => this.searchResult = result);
+    .subscribe(result => {this.searchResult = result; this.currentPage= result.pageable.pageNumber});
 
   }
 }
