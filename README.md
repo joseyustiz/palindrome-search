@@ -25,7 +25,7 @@
 
 ## Installation Process
 
-1. Building and packaging the Spring Boot application
+**1. Building and packaging the Spring Boot application**
 
 Run the following command in the root of the project:
 
@@ -34,19 +34,20 @@ Run the following command in the root of the project:
 ```
 
 It takes advantage of the latest available features of **Buildpacks** from Spring Boot 2.3.x, which creates the image **docker.io/library/walmart:0.0.1-SNAPSHOT**   
-2. Run the containers
+
+**2. Run the containers**
 ```console
 docker-compose -f app.yml up -d
 ```
 This commando will run the mongo database (walmart_products-db_1), the spring boot application (walmart_backend_1) and the angular application (walmart_frontend_1) 
 
-3. Import products data into mongo
+**3. Import products data into mongo**
 ```console
 docker exec walmart_products-db_1 bash -c 'bash /database/import.sh localhost'
 ```
 NOTE: becase mongoimport requires mongod to be up and running, the import.sh script cannot be called in the Dockerfile.
   
-4. Open the application in the browser or execute HTTP GET to the endpoints
+**4. Open the application in the browser or execute HTTP GET to the endpoints**
 
 Go to http://localhost:4200 or execute requests to the endpoint as explained at [Example requests](#example-requests). 
 
