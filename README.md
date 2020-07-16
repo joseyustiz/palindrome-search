@@ -18,7 +18,7 @@
 * Gradle
 * MongoDB
 
-##Frontend Technology
+## Frontend Technology
 * TypeScript
 * Bootstrap
 * Angular
@@ -75,6 +75,11 @@ build -t palindrome-search .
 ```console
 docker run --network api-net -p 4200:80 palindrome-search
 ```
+
+8. Open the application in the browser
+
+Go to http://localhost:4200
+
 ## Using full-text search instead of Regex search
 This application uses full-text search technology of Mongo DB, which provides a better performance and scalability than Regex search. For more information, go to https://docs.mongodb.com/manual/text-search 
 
