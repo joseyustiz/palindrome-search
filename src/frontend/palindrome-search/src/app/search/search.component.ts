@@ -55,13 +55,11 @@ export class SearchComponent implements OnInit {
   }
 
   submitSearchForm(){
-    console.log("Form submited!")
     const search: Search = {
       phrase: this.searchForm.get("phrase").value,
       page: this.currentPage,
       size: 20
     };
-    console.log("valor de currentPage = "+this.currentPage)
     this.service.searchProduct(search)
     .subscribe(result => {this.searchResult = result; this.currentPage= result.pageable.pageNumber});
 
