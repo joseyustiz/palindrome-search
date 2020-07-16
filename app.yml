@@ -1,0 +1,35 @@
+version: '3.5'
+services:
+  backend:
+    image: docker.io/library/walmart:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATA_MONGODB_HOST=products-db
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_USERNAME=productListUser
+      - SPRING_DATA_MONGODB_PASSWORD=productListPassword
+      - SPRING_DATA_MONGODB_DATABASE=promotions
+    depends_on:
+      - products-db
+    networks:
+      - api-net
+  frontend:
+    build: src/frontend/palindrome-search
+    ports:
+      - 4200:80
+    depends_on:
+      - backend
+    networks:
+      - api-net
+  products-db:
+    build: src/docker/productos-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=productListUser
+      - MONGO_INITDB_ROOT_PASSWORD=productListPassword
+    networks:
+      - api-net
+
+networks:
+  api-net:
+    driver: bridge
