@@ -40,7 +40,7 @@ docker-compose -f app.yml up -d
 ```
 This commando will run the mongo database (walmart_products-db_1), the spring boot application (walmart_backend_1) and the angular application (walmart_frontend_1) 
 
-3. Import products data to mongo
+3. Import products data into mongo
 ```console
 docker exec walmart_products-db_1 bash -c 'bash /database/import.sh localhost'
 ```
