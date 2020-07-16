@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   currentPage: number;
   searchForm: FormGroup;
   searchError: boolean = false;
+  searchPhrase: string;
   searchResult: SearchResult = {
     content: [],
     pageable: {
@@ -40,7 +41,8 @@ export class SearchComponent implements OnInit {
     },
     size: 0,
     number: 0,
-    empty: true
+    empty: true,
+    errorMessage: ""
   };
 
   constructor(private fb: FormBuilder, private service: SearchService) { }
@@ -57,11 +59,13 @@ export class SearchComponent implements OnInit {
   submitSearchForm(){
     const search: Search = {
       phrase: this.searchForm.get("phrase").value,
-      page: this.currentPage,
+      page: 1,
       size: 20
     };
+    this.searchPhrase="";
+    console.log("submitin !!!")
     this.service.searchProduct(search)
-    .subscribe(result => {this.searchResult = result; this.currentPage= result.pageable.pageNumber});
+    .subscribe(result => {this.searchResult = result; this.currentPage= result.pageable.pageNumber;this.searchPhrase=search.phrase});
 
   }
 }
